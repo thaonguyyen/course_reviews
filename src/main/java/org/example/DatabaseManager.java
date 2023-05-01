@@ -251,7 +251,6 @@ public class DatabaseManager {
         db.addCourse("CS", 6969);
         db.addCourse("CS", 1234);
         db.addReview("vdk4dy", "CS", 1234, "This class sucks so much it doesn't even exist", 3);
-        System.out.println(db.getStudentID("dfdadsf"));
         db.disconnect();
     }
 }
