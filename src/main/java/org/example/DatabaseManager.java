@@ -221,8 +221,10 @@ public class DatabaseManager {
         try {
             String courseDep = c.getCourseDepartment();
             int courseCatNum = c.getCourseCatalogNumber();
+            String studentName = s.getStudentName();
+            int studentID = getStudentID(studentName);
             int courseID = getCourseID(courseDep, courseCatNum);
-            String queryString = "SELECT * FROM Reviews WHERE StudentID = " + s.getStudentID() + " AND CourseID = " + courseID;
+            String queryString = "SELECT * FROM Reviews WHERE StudentID = " + studentID + " AND CourseID = " + courseID;
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(queryString);
             if(rs.isClosed()){
