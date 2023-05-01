@@ -29,9 +29,7 @@ public class CourseReviewImplementation implements CourseReview{
         return (databaseManager.getStudentID(username) != -1);
     }
     public void createUser(String username, String password){
-        if(databaseManager.getStudentID(username) == 0) {
-            databaseManager.addStudent(username, password);
-        }
+        databaseManager.addStudent(username, password);
 
     }
     public void logout(){
