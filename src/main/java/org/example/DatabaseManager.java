@@ -125,8 +125,10 @@ public class DatabaseManager {
         }
     }
 
-    public void addStudent(String username, String password){
+    public void addStudent(Student s){
         try {
+            String username = s.getStudentName();
+            String password = s.getStudentPassword();
             String addStudent = String.format("INSERT INTO Students (ID, Student" +
                     "Name, Password) values(NULL, \"%s\", \"%s\")", username, password);
             Statement addStudentStatement = connection.createStatement();
