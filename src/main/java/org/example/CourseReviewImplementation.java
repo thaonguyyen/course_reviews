@@ -40,6 +40,9 @@ public class CourseReviewImplementation implements CourseReview{
         return !(databaseManager.getReviewByStudentAndCourse(loggedInStudent,c) == null);
     }
     public void submitReview(Course c, String review, int rating){
+        if(databaseManager.getCourseID(c.getCourseDepartment(),c.getCourseCatalogNumber()) == -1){
+            databaseManager.addCourse(c.getCourseDepartment(),c.getCourseCatalogNumber());
+        }
         if(!checkReviewAlreadyExists(c)) {
             databaseManager.addReview(loggedInStudent.getStudentName(), c.getCourseDepartment(), c.getCourseCatalogNumber(), review, rating);
         }
