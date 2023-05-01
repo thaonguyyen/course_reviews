@@ -179,6 +179,7 @@ public class DatabaseManager {
             throw new IllegalStateException(e);
         }
     }
+
     public int getStudentID(String name){
         try{
             String queryString = String.format("SELECT * FROM Students WHERE StudentName = \'%s\'", name);
@@ -218,7 +219,10 @@ public class DatabaseManager {
 
     public Review getReviewByStudentAndCourse(Student s, Course c){
         try {
-            String queryString = "SELECT * FROM Reviews WHERE StudentID = " + s.getStudentID() + " AND CourseID = " + c.getCourseID();
+            String courseDep = c.getCourseDepartment();
+            int courseCatNum = c.getCourseCatalogNumber();
+            int courseID = getCourseID(courseDep, courseCatNum);
+            String queryString = "SELECT * FROM Reviews WHERE StudentID = " + s.getStudentID() + " AND CourseID = " + courseID;
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(queryString);
             if(rs.isClosed()){
