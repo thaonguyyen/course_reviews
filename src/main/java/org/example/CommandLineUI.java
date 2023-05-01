@@ -1,8 +1,7 @@
 package org.example;
 
+import java.util.List;
 import java.util.Scanner;
-
-import static java.lang.Character.isUpperCase;
 
 public class CommandLineUI {
     private Scanner scanner;
@@ -13,8 +12,6 @@ public class CommandLineUI {
         db.connect();
         ui.initializeScanner();
         ui.loginUI();
-        //ui.mainMenu();
-        //ui.logout();
     }
     private void initializeScanner() {
         scanner = new Scanner(System.in);
@@ -83,8 +80,8 @@ public class CommandLineUI {
 
     private void seeReviews(){
         System.out.println("Enter course you would like to see reviews for: ");
-        String course = scanner.nextLine();
-        String[] splitString = course.split("\\s+");
+        String courseString = scanner.nextLine();
+        String[] splitString = courseString.split("\\s+");
         String subject = splitString[0];
         int catalogNum = Integer.parseInt(splitString[1]);
 
@@ -95,10 +92,23 @@ public class CommandLineUI {
             mainMenu();
         }
         else{
+            Course course = new Course(subject, catalogNum);
             //if course has no reviews
-
-            //else if course has reviews
-
+            if(!db.hasReviews(course)){
+                System.out.println("There are no reviews for this course. Try again.");
+                mainMenu();
+            }
+            //else course has reviews
+            else{
+                List<Review> allReviews = db.getReviewsByCourse(course);
+                System.out.println("Reviews for this course: ");
+                List<String> allMessages = db.getAllReviewMessages(course);
+                for(String s : allMessages){
+                    System.out.println(s);
+                }
+                double average = db.getAverageForReview(course);
+                System.out.println("Course average: "+average+"/5");
+            }
         }
     }
 

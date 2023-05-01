@@ -30,13 +30,15 @@ public class CourseReviewImplementation implements CourseReview{
         return (databaseManager.getStudentID(username) != -1);
     }
     public void createUser(String username, String password){
-        databaseManager.addStudent(username, password);
-
+        loggedInStudent = new Student(username, password);
+        databaseManager.addStudent(loggedInStudent);
     }
+
     public void logout(){
         loggedInStudent = null;
         databaseManager.disconnect();
     }
+
     public boolean checkReviewAlreadyExists(Course c){
         return !(databaseManager.getReviewByStudentAndCourse(loggedInStudent,c) == null);
     }
@@ -58,5 +60,26 @@ public class CourseReviewImplementation implements CourseReview{
     }
     public List<Review> getReviewsByCourse(Course c){
         return databaseManager.getAllReviews(c.getCourseDepartment(),c.getCourseCatalogNumber());
+    }
+
+    public double getAverageForReview(Course c){
+        List<Review> allReviews = getReviewsByCourse(c);
+        int sumOfRating = 0;
+        double count = 0;
+        for(Review review : allReviews){
+            sumOfRating += review.getReviewRating();
+            count++;
+        }
+        double average = sumOfRating/count;
+        return average;
+    }
+
+    public List<String> getAllReviewMessages(Course c){
+        List<Review> allReviews = getReviewsByCourse(c);
+        List<String> reviews = new ArrayList<>();
+        for(Review review : allReviews){
+            reviews.add(review.getReviewMessage());
+        }
+        return reviews;
     }
 }

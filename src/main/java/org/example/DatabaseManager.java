@@ -192,7 +192,6 @@ public class DatabaseManager {
                 return -1;
             }
             int studentID = rs.getInt("ID");
-            System.out.println(studentID);
             return studentID;
         }
         catch(SQLException e){
@@ -272,11 +271,16 @@ public class DatabaseManager {
         //db.deleteTables();
         //db.createTables();
         db.clear();
-        db.addStudent("ews9rk", "qwerty");
-        db.addStudent("vdk4dy", "stupid");
+        /*String user1 = "ews9rk";
+        String pass1 = "qwerty";
+        String user2 = "vdk4dy";
+        String pass2 = "password";
+        Student one = new Student(user1, pass1);
+        Student two = new Student(user2, pass2);
+        db.addStudent(one);
+        db.addStudent(two);
         db.addCourse("CS", 6969);
-        db.addCourse("CS", 1234);
-        db.addReview("vdk4dy", "CS", 1234, "This class sucks so much it doesn't even exist", 3);
+        db.addCourse("CS", 1234);*/
         //db.clear();
         db.disconnect();
     }

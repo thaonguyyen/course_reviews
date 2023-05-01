@@ -29,11 +29,4 @@ public class Review {
         this.rating = newRating;
     }
 
-    //checks that rating is an integer from 1-5
-    public boolean checkRating(int rating){
-        if(rating == 1 || rating == 2 || rating == 3 || rating == 4 || rating == 5){
-            return true;
-        }
-        return false;
-    }
 }
