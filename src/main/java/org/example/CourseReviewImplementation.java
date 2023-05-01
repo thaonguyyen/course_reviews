@@ -8,6 +8,11 @@ public class CourseReviewImplementation implements CourseReview{
     public Student loggedInStudent;
     public void connect(){
         databaseManager.connect();
+        try{
+            databaseManager.createTables();
+        }catch(IllegalStateException e){
+
+        }
     }
     public boolean login(String username, String password){
         int id = databaseManager.getStudentID(username);
