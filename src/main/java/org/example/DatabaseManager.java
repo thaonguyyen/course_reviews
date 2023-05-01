@@ -182,6 +182,9 @@ public class DatabaseManager {
             //String queryString = "SELECT * FROM Students WHERE StudentName="+name;
             Statement studentStatement = connection.createStatement();
             ResultSet rs = studentStatement.executeQuery(queryString);
+            if(rs.isClosed()){
+                return -1;
+            }
             int studentID = rs.getInt("ID");
             System.out.println(studentID);
             return studentID;
@@ -248,6 +251,7 @@ public class DatabaseManager {
         db.addCourse("CS", 6969);
         db.addCourse("CS", 1234);
         db.addReview("vdk4dy", "CS", 1234, "This class sucks so much it doesn't even exist", 3);
+        System.out.println(db.getStudentID("dfdadsf"));
         db.disconnect();
     }
 }
