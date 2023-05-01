@@ -6,39 +6,65 @@ import static java.lang.Character.isUpperCase;
 
 public class CommandLineUI {
     private Scanner scanner;
+    static CourseReviewImplementation db = new CourseReviewImplementation();
 
     public static void main(String[] args) {
         CommandLineUI ui = new CommandLineUI();
+        db.connect();
         ui.initializeScanner();
-        ui.login();
-        ui.mainMenu();
-        ui.logout();
+        ui.loginUI();
+        //ui.mainMenu();
+        //ui.logout();
     }
     private void initializeScanner() {
         scanner = new Scanner(System.in);
     }
 
-    private void login(){
-        System.out.println("Login: ");
-        String login = scanner.nextLine();
-        System.out.println("Enter password: ");
-        String pass1 = scanner.nextLine();
-        System.out.println("Confirm password: ");
-        String pass2 = scanner.nextLine();
-        if(pass1.equals(pass2)){
-            //if passwords match then add to Students table and log in
+    private void loginUI(){
+        System.out.println("Would you like to log-in to existing user (1) or create a new user (2)?");
+        int choice = Integer.parseInt(scanner.nextLine());
+        if(choice == 1){
+            System.out.println("Enter existing username: ");
+            String username = scanner.nextLine();
+            if(db.existingUser(username)){
+                System.out.println("Enter password: ");
+                String pass = scanner.nextLine();
+                if(db.login(username, pass)){
+                    mainMenu();
+                }
+                else{
+                    System.out.println("Invalid password for existing username. Try again.");
+                    loginUI();
+                }
+            }
+            else{
+                System.out.println("Username does not exist. Try again.");
+                loginUI();
+            }
         }
         else{
-            //do not add anything to students table and go back to login()
-            System.out.println("Invalid password. Try again.");
-            login();
+            System.out.println("Enter new username: ");
+            String newUser = scanner.nextLine();
+            System.out.println("Enter password: ");
+            String pass1 = scanner.nextLine();
+            System.out.println("Confirm password: ");
+            String pass2 = scanner.nextLine();
+            if(pass1.equals(pass2)){
+                db.createUser(newUser, pass2);
+                mainMenu();
+            }
+            else{
+                System.out.println("Passwords do not match. Try again.");
+                loginUI();
+            }
         }
     }
 
     private void logout(){
         System.out.println("You are now logged out.");
-        login();
+        loginUI();
     }
+
     private void mainMenu(){
         System.out.println("Would you like to submit a review (1), see reviews for a course (2), or logout (3)?");
         int choice = Integer.parseInt(scanner.nextLine());
@@ -78,37 +104,41 @@ public class CommandLineUI {
 
     private void submitReview(){
         System.out.println("Enter course you would like to review: ");
-        String course = scanner.nextLine();
-        String[] splitString = course.split("\\s+");
+        String courseString = scanner.nextLine();
+        String[] splitString = courseString.split("\\s+");
         String subject = splitString[0];
         int catalogNum = Integer.parseInt(splitString[1]);
 
         //check subject is 4 or fewer capital letters and catalogNum is 4 digits
-        if(!isUpperCase(subject) || countDigits(catalogNum) != 4){ //ADD CONDITIONAL IF COURSE ALREADY EXISTS
+        if(!isUpperCase(subject) || countDigits(catalogNum) != 4){
             //return to main menu
             System.out.println("Invalid course. Try again.");
             mainMenu();
         }
-        else{
-            //add course to table
-
-            //prompt for review
-            System.out.println("Write review for course: ");
-            String message = scanner.nextLine();
-
-            //prompt for rating
-            promptRating();
+        else {
+            Course course = new Course(subject, catalogNum);
+            //check if user wrote review for course
+            if (db.checkReviewAlreadyExists(course)) {
+                System.out.println("Review for this course already exists from this user. Try again.");
+                mainMenu();
+            } else {
+                System.out.println("Enter review for course: ");
+                String message = scanner.nextLine();
+                int rating = promptRating();
+                db.submitReview(course, message, rating);
+            }
         }
     }
 
-    private void promptRating(){
-        System.out.println("Course rating: ");
+    private int promptRating(){
+        System.out.println("Enter course rating: ");
         String ratingString = scanner.nextLine();
         int rating = Integer.parseInt(ratingString);
         if(rating < 1 || rating > 5){
             System.out.println("Invalid rating. Try again.");
             promptRating();
         }
+        return rating;
     }
     public int countDigits(int n){
         int count = 0;
