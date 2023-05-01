@@ -169,6 +169,9 @@ public class DatabaseManager {
             String queryString = String.format("SELECT ID FROM Courses WHERE Department = \'%s\' AND CatalogNumber = %d", department, catNumber);
             Statement courseStatement = connection.createStatement();
             ResultSet rs = courseStatement.executeQuery(queryString);
+            if(rs.isClosed()){
+                return -1;
+            }
             int courseID = rs.getInt("ID");
             return courseID;
         }
@@ -212,6 +215,21 @@ public class DatabaseManager {
         int rating = rs.getInt("Rating");
         return new Review(studentID, courseID, review, rating);
     }
+
+    public Review getReviewByStudentAndCourse(Student s, Course c){
+        try {
+            String queryString = "SELECT * FROM Reviews WHERE StudentID = " + s.getStudentID() + " AND CourseID = " + c.getCourseID();
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(queryString);
+            if(rs.isClosed()){
+                return null;
+            }
+            return getReview(rs);
+        }catch(SQLException e){
+            throw new IllegalStateException(e);
+        }
+    }
+
     public List<Review> getAllReviews(String department, int catNumber){
         try{
             List<Review>  returnList = new ArrayList<Review>();
@@ -251,6 +269,7 @@ public class DatabaseManager {
         db.addCourse("CS", 6969);
         db.addCourse("CS", 1234);
         db.addReview("vdk4dy", "CS", 1234, "This class sucks so much it doesn't even exist", 3);
+        //db.clear();
         db.disconnect();
     }
 }
