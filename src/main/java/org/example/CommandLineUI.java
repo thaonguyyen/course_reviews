@@ -121,7 +121,8 @@ public class CommandLineUI {
             if (db.checkReviewAlreadyExists(course)) {
                 System.out.println("Review for this course already exists from this user. Try again.");
                 mainMenu();
-            } else {
+            }
+            else {
                 System.out.println("Enter review for course: ");
                 String message = scanner.nextLine();
                 int rating = promptRating();

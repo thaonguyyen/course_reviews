@@ -15,10 +15,10 @@ public class CourseReviewImplementation implements CourseReview{
         }
     }
     public boolean login(String username, String password){
-        int id = databaseManager.getStudentID(username);
+        //int id = databaseManager.getStudentID(username);
         String actual = databaseManager.getPassword(username);
         if (actual.equals(password)) {
-            loggedInStudent = new Student(id, username, password);
+            loggedInStudent = new Student(username, password);
             return true;
         }
         else{
