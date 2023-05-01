@@ -190,6 +190,18 @@ public class DatabaseManager {
             throw new IllegalStateException(e);
         }
     }
+    public String getPassword(String studentName){
+        try {
+            int studentID = getStudentID(studentName);
+            String queryString = "SELECT * FROM Students WHERE ID = "+studentID;
+            Statement passwordStatement = connection.createStatement();
+            ResultSet rs = passwordStatement.executeQuery(queryString);
+            return rs.getString("Password");
+        }
+        catch(SQLException e){
+            throw new IllegalStateException(e);
+        }
+    }
     public Review getReview(ResultSet rs) throws SQLException{
         int studentID = rs.getInt("StudentID");
         int courseID = rs.getInt("CourseID");
