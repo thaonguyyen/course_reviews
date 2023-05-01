@@ -12,7 +12,7 @@ public class DatabaseManager {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database does not exist");
         }
     }
     public void createTables(){
@@ -20,11 +20,15 @@ public class DatabaseManager {
             //how to make student name unique
             String studentTableCreate = "CREATE TABLE Students (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Name VARCHAR(32) NOT NULL, Password VARCHAR(32) NOT NULL)";
             String coursesTableCreate = "CREATE TABLE Courses (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Department VARCHAR(5) NOT NULL, CatalogNumber INTEGER NOT NULL)";
-            String reviewsTableCreate = "CREATE TABLE Reviews (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, StudentID INTEGER NOT NULL, CourseID INTEGER NOT NULL, Review VARCHAR(200) NOT NULL, Rating INTEGER NOT NULL" +
-                    "FOREIGN KEY(StudentID) REFERENCES Student(ID) ON DELETE CASCADE, FOREIGN KEY(CourseID) REFERENCES Course(ID) ON DELETE CASCADE)";
+            String reviewsTableCreate = "CREATE TABLE Reviews (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, StudentID INTEGER NOT NULL, CourseID INTEGER NOT NULL, Review VARCHAR(200) NOT NULL, Rating INTEGER NOT NULL," +
+                    "FOREIGN KEY(StudentID) REFERENCES Students(ID) ON DELETE CASCADE, FOREIGN KEY(CourseID) REFERENCES Courses(ID) ON DELETE CASCADE)";
             Statement studentTableStatement = connection.createStatement();
             Statement coursesTableStatement = connection.createStatement();
             Statement reviewsTableStatement = connection.createStatement();
+
+            studentTableStatement.executeUpdate(studentTableCreate);
+            coursesTableStatement.executeUpdate(coursesTableCreate);
+            reviewsTableStatement.executeUpdate(reviewsTableCreate);
 
             studentTableStatement.close();
             coursesTableStatement.close();
@@ -46,18 +50,18 @@ public class DatabaseManager {
             Statement statement = connection.createStatement();
             boolean doesExist = false;
             if (rsStudents.next()){
-                String sqlStops =  "DELETE FROM Students;";
-                statement.execute(sqlStops);
+                String sqlStudents =  "DELETE FROM Students;";
+                statement.execute(sqlStudents);
             } else doesExist = true;
 
             if (rsReviews.next()){
-                String sqlBusLines =  "DELETE FROM Reviews;";
-                statement.execute(sqlBusLines);
+                String sqlReviews =  "DELETE FROM Reviews;";
+                statement.execute(sqlReviews);
             } else doesExist = true;
 
             if (rsCourse.next()){
-                String sqlRoutes =  "DELETE FROM Courses;";
-                statement.execute(sqlRoutes);
+                String sqlCourses =  "DELETE FROM Courses;";
+                statement.execute(sqlCourses);
             } else doesExist = true;
             if (doesExist) throw new IllegalStateException("At least one table did not exist");
             statement.close();
@@ -128,4 +132,11 @@ public class DatabaseManager {
         }
     }
 
+    public static void main(String[] args) throws SQLException {
+        DatabaseManager db = new DatabaseManager();
+        db.connect();
+        db.deleteTables();
+        db.createTables();
+        db.disconnect();
+    }
 }
