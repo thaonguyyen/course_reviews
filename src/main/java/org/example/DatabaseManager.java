@@ -18,7 +18,7 @@ public class DatabaseManager {
     public void createTables(){
         try {
             //how to make student name unique
-            String studentTableCreate = "CREATE TABLE Students (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Name VARCHAR(32) NOT NULL, Password VARCHAR(32) NOT NULL)";
+            String studentTableCreate = "CREATE TABLE Students (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, StudentName VARCHAR(32) NOT NULL, Password VARCHAR(32) NOT NULL)";
             String coursesTableCreate = "CREATE TABLE Courses (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Department VARCHAR(5) NOT NULL, CatalogNumber INTEGER NOT NULL)";
             String reviewsTableCreate = "CREATE TABLE Reviews (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, StudentID INTEGER NOT NULL, CourseID INTEGER NOT NULL, Review VARCHAR(200) NOT NULL, Rating INTEGER NOT NULL," +
                     "FOREIGN KEY(StudentID) REFERENCES Students(ID) ON DELETE CASCADE, FOREIGN KEY(CourseID) REFERENCES Courses(ID) ON DELETE CASCADE)";
@@ -123,6 +123,73 @@ public class DatabaseManager {
         }
     }
 
+    public void addStudent(String username, String password){
+        try {
+            String addStudent = String.format("INSERT INTO Students (ID, Student" +
+                    "Name, Password) values(NULL, \"%s\", \"%s\")", username, password);
+            Statement addStudentStatement = connection.createStatement();
+
+            addStudentStatement.executeUpdate(addStudent);
+            addStudentStatement.close();
+        }
+        catch(SQLException e){
+            throw new IllegalStateException(e);
+        }
+    }
+    public void addCourse(String department, int catNumber){
+        try {
+            String addCourse = String.format("INSERT INTO Courses (ID, Department, CatalogNumber) values(NULL, \"%s\", %d)", department, catNumber);
+            Statement addCourseStatement = connection.createStatement();
+
+            addCourseStatement.executeUpdate(addCourse);
+            addCourseStatement.close();
+        }
+        catch(SQLException e){
+            throw new IllegalStateException(e);
+        }
+    }
+    public void addReview(String studentName, String department, int catNumber, String review, int rating){
+        try {
+            int studentID = getStudentID(studentName);
+            int courseID = getCourseID(department, catNumber);
+            String addStudent = String.format("INSERT INTO Students (ID, StudentID, CourseID, Review, Rating) values(NULL, %d, %d, \"%s\", %d)", studentID, courseID, review, rating );
+            Statement addStudentStatement = connection.createStatement();
+
+            addStudentStatement.executeUpdate(addStudent);
+            addStudentStatement.close();
+        }
+        catch(SQLException e){
+            throw new IllegalStateException(e);
+        }
+    }
+    public int getCourseID(String department, int catNumber){
+        try{
+            String queryString = String.format("SELECT ID FROM Courses WHERE Department = \"%s\" AND WHERE CatalogNumber = %d", department, catNumber);
+            Statement courseStatement = connection.createStatement();
+            ResultSet rs = courseStatement.executeQuery(queryString);
+            int courseID = rs.getInt("ID");
+            return courseID;
+        }
+        catch(SQLException e){
+            throw new IllegalStateException(e);
+        }
+    }
+    public int getStudentID(String studentName){
+        try{
+            String queryString = "SELECT ID FROM Students WHERE StudentName = "+studentName;
+            Statement studentStatement = connection.createStatement();
+            ResultSet rs = studentStatement.executeQuery(queryString);
+            int studentID = rs.getInt("ID");
+            System.out.println(studentID);
+            return studentID;
+        }
+        catch(SQLException e){
+            throw new IllegalStateException(e);
+        }
+    }
+
+
+
     public void disconnect() {
         try {
             checkNotConnected();
@@ -135,8 +202,13 @@ public class DatabaseManager {
     public static void main(String[] args) throws SQLException {
         DatabaseManager db = new DatabaseManager();
         db.connect();
-        db.deleteTables();
-        db.createTables();
+        //db.deleteTables();
+       // db.createTables();
+        db.addStudent("ews9rk", "qwerty");
+        db.addStudent("vdk4dy", "stupid");
+        db.addCourse("CS", 6969);
+        db.addCourse("CS", 1234);
+        db.addReview("vdk4dy", "CS", 1234, "This class sucks so much it doesn't even exist", 3);
         db.disconnect();
     }
 }
