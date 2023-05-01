@@ -1,5 +1,6 @@
 package org.example;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +51,10 @@ public class CourseReviewImplementation implements CourseReview{
         if(!checkReviewAlreadyExists(c)) {
             databaseManager.addReview(loggedInStudent.getStudentName(), c.getCourseDepartment(), c.getCourseCatalogNumber(), review, rating);
         }
+    }
+    public boolean hasReviews(Course c){
+        List<Review> reviews = databaseManager.getAllReviews(c.getCourseDepartment(),c.getCourseCatalogNumber());
+        return reviews.size() > 0;
     }
     public List<Review> getReviewsByCourse(Course c){
         return databaseManager.getAllReviews(c.getCourseDepartment(),c.getCourseCatalogNumber());
