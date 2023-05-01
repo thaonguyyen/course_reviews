@@ -1,5 +1,7 @@
 package org.example;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseManager {
     Connection connection;
@@ -152,11 +154,11 @@ public class DatabaseManager {
         try {
             int studentID = getStudentID(studentName);
             int courseID = getCourseID(department, catNumber);
-            String addStudent = String.format("INSERT INTO Students (ID, StudentID, CourseID, Review, Rating) values(NULL, %d, %d, \"%s\", %d)", studentID, courseID, review, rating );
-            Statement addStudentStatement = connection.createStatement();
+            String addReview = String.format("INSERT INTO Reviews (ID, StudentID, CourseID, Review, Rating) values(NULL, %d, %d, \"%s\", %d)", studentID, courseID, review, rating);
+            Statement addReviewStatement = connection.createStatement();
 
-            addStudentStatement.executeUpdate(addStudent);
-            addStudentStatement.close();
+            addReviewStatement.executeUpdate(addReview);
+            addReviewStatement.close();
         }
         catch(SQLException e){
             throw new IllegalStateException(e);
@@ -164,7 +166,7 @@ public class DatabaseManager {
     }
     public int getCourseID(String department, int catNumber){
         try{
-            String queryString = String.format("SELECT ID FROM Courses WHERE Department = \"%s\" AND WHERE CatalogNumber = %d", department, catNumber);
+            String queryString = String.format("SELECT ID FROM Courses WHERE Department = \'%s\' AND CatalogNumber = %d", department, catNumber);
             Statement courseStatement = connection.createStatement();
             ResultSet rs = courseStatement.executeQuery(queryString);
             int courseID = rs.getInt("ID");
@@ -174,9 +176,10 @@ public class DatabaseManager {
             throw new IllegalStateException(e);
         }
     }
-    public int getStudentID(String studentName){
+    public int getStudentID(String name){
         try{
-            String queryString = "SELECT ID FROM Students WHERE StudentName = "+studentName;
+            String queryString = String.format("SELECT * FROM Students WHERE StudentName = \'%s\'", name);
+            //String queryString = "SELECT * FROM Students WHERE StudentName="+name;
             Statement studentStatement = connection.createStatement();
             ResultSet rs = studentStatement.executeQuery(queryString);
             int studentID = rs.getInt("ID");
@@ -187,7 +190,30 @@ public class DatabaseManager {
             throw new IllegalStateException(e);
         }
     }
-
+    public Review getReview(ResultSet rs) throws SQLException{
+        int studentID = rs.getInt("StudentID");
+        int courseID = rs.getInt("CourseID");
+        String review = rs.getString("Review");
+        int rating = rs.getInt("Rating");
+        return new Review(studentID, courseID, review, rating);
+    }
+    public List<Review> getAllReviews(String department, int catNumber){
+        try{
+            List<Review>  returnList = new ArrayList<Review>();
+            int courseID = getCourseID(department, catNumber);
+            String queryString = "SELECT * FROM Reviews WHERE CourseID = "+courseID;
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(queryString);
+            while(rs.next()){
+                returnList.add(getReview(rs));
+            }
+            statement.close();
+            return returnList;
+        }
+        catch(SQLException e){
+            throw new IllegalStateException(e);
+        }
+    }
 
 
     public void disconnect() {
@@ -203,7 +229,8 @@ public class DatabaseManager {
         DatabaseManager db = new DatabaseManager();
         db.connect();
         //db.deleteTables();
-       // db.createTables();
+        //db.createTables();
+        db.clear();
         db.addStudent("ews9rk", "qwerty");
         db.addStudent("vdk4dy", "stupid");
         db.addCourse("CS", 6969);

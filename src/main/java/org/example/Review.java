@@ -3,10 +3,14 @@ package org.example;
 public class Review {
     private String message;
     private int rating;
+    private int studentID;
+    private int courseID;
 
-    public Review(String reviewMessage, int reviewRating){
+    public Review(int student, int course, String reviewMessage, int reviewRating){
         this.message = reviewMessage;
         this.rating = reviewRating;
+        this.studentID = student;
+        this.courseID = course;
     }
 
     public String getReviewMessage(){
