@@ -39,8 +39,11 @@ public class CourseReviewImplementation implements CourseReview{
     public boolean checkReviewAlreadyExists(Course c){
         return !(databaseManager.getReviewByStudentAndCourse(loggedInStudent,c) == null);
     }
+    public boolean checkCourseExists(Course c){
+        return !(databaseManager.getCourseID(c.getCourseDepartment(),c.getCourseCatalogNumber()) == -1);
+    }
     public void submitReview(Course c, String review, int rating){
-        if(databaseManager.getCourseID(c.getCourseDepartment(),c.getCourseCatalogNumber()) == -1){
+        if(!checkCourseExists(c)){
             databaseManager.addCourse(c.getCourseDepartment(),c.getCourseCatalogNumber());
         }
         if(!checkReviewAlreadyExists(c)) {
