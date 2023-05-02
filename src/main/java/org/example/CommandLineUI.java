@@ -39,7 +39,7 @@ public class CommandLineUI {
                 loginUI();
             }
         }
-        else{
+        else if(choice == 2){
             System.out.println("Enter new username: ");
             String newUser = scanner.nextLine();
             System.out.println("Enter password: ");
@@ -54,6 +54,10 @@ public class CommandLineUI {
                 System.out.println("Passwords do not match. Try again.");
                 loginUI();
             }
+        }
+        else{
+            System.out.println("Invalid choice. Try again.");
+            loginUI();
         }
     }
 
@@ -73,8 +77,12 @@ public class CommandLineUI {
             seeReviews();
             mainMenu();
         }
-        else{
+        else if(choice == 3){
             logout();
+        }
+        else{
+            System.out.println("Invalid choice. Try again.");
+            mainMenu();
         }
     }
 
@@ -135,7 +143,10 @@ public class CommandLineUI {
             else {
                 System.out.println("Enter review for course: ");
                 String message = scanner.nextLine();
-                int rating = promptRating();
+                int rating = -1;
+                while(rating == -1){
+                    rating = promptRating();
+                }
                 db.submitReview(course, message, rating);
             }
         }
@@ -147,9 +158,11 @@ public class CommandLineUI {
         int rating = Integer.parseInt(ratingString);
         if(rating < 1 || rating > 5){
             System.out.println("Invalid rating. Try again.");
-            promptRating();
+            return -1;
         }
-        return rating;
+        else{
+            return rating;
+        }
     }
     public int countDigits(int n){
         int count = 0;
