@@ -3,6 +3,8 @@ package org.example;
 import java.util.List;
 import java.util.Scanner;
 
+import static java.lang.Character.isDigit;
+
 public class CommandLineUI {
     private Scanner scanner;
     static CourseReviewImplementation db = new CourseReviewImplementation();
@@ -155,13 +157,19 @@ public class CommandLineUI {
     private int promptRating(){
         System.out.println("Enter course rating: ");
         String ratingString = scanner.nextLine();
-        int rating = Integer.parseInt(ratingString);
-        if(rating < 1 || rating > 5){
+        if(!ratingString.matches("-?\\d+(\\.\\d+)?")){
             System.out.println("Invalid rating. Try again.");
             return -1;
         }
         else{
-            return rating;
+            int rating = Integer.parseInt(ratingString);
+            if(rating < 1 || rating > 5){
+                System.out.println("Invalid rating. Try again.");
+                return -1;
+            }
+            else{
+                return rating;
+            }
         }
     }
     public int countDigits(int n){
@@ -185,5 +193,6 @@ public class CommandLineUI {
         }
         return true;
     }
+
 
 }
