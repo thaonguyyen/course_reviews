@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="resources.CreateNewUser"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="223.0" layoutY="85.0" text="Please enter the fields below:" />
+      <TextField layoutX="206.0" layoutY="147.0" prefHeight="26.0" prefWidth="187.0" promptText="Username:" />
+      <TextField layoutX="206.0" layoutY="180.0" prefHeight="26.0" prefWidth="187.0" promptText="Password:" />
+      <TextField layoutX="206.0" layoutY="217.0" prefHeight="26.0" prefWidth="187.0" promptText="Confirm Password:" />
+      <Label layoutX="206.0" layoutY="128.0" prefHeight="18.0" prefWidth="187.0" text="*error message" textFill="RED" />
+      <Button layoutX="248.0" layoutY="270.0" mnemonicParsing="false" text="Create New User" />
+      <Button layoutX="462.0" layoutY="27.0" mnemonicParsing="false" text="Back to Welcome" />
+   </children>
 </AnchorPane>
