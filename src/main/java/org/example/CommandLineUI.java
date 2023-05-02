@@ -94,7 +94,7 @@ public class CommandLineUI {
         int catalogNum = Integer.parseInt(splitString[1]);
 
         //check subject is 4 or fewer capital letters and catalogNum is 4 digits
-        if(!isUpperCase(subject) || countDigits(catalogNum) != 4){ //ADD CONDITIONAL IF COURSE ALREADY EXISTS
+        if(!isUpperCase(subject) || countDigits(catalogNum) != 4 || subject.length() > 4){
             //return to main menu
             System.out.println("Invalid course. Try again.");
             mainMenu();
@@ -128,7 +128,7 @@ public class CommandLineUI {
         int catalogNum = Integer.parseInt(splitString[1]);
 
         //check subject is 4 or fewer capital letters and catalogNum is 4 digits
-        if(!isUpperCase(subject) || countDigits(catalogNum) != 4){
+        if(!isUpperCase(subject) || countDigits(catalogNum) != 4 || subject.length() > 4){
             //return to main menu
             System.out.println("Invalid course. Try again.");
             mainMenu();
