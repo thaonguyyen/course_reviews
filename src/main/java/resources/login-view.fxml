@@ -17,6 +17,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="198.0" layoutY="228.0" prefHeight="18.0" prefWidth="204.0" text="Label" />
+      <Label layoutX="198.0" layoutY="228.0" prefHeight="18.0" prefWidth="204.0" text="*error message" textFill="RED" />
+      <Button layoutX="468.0" layoutY="29.0" mnemonicParsing="false" text="Back to welcome" />
    </children>
 </AnchorPane>
