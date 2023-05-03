@@ -5,9 +5,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Screen;
 
 public class LoginController {
     private CourseReviewImplementation implementation;
+    private ScreenManager screenManager;
     private Student logginInStudent;
 
     @FXML
@@ -23,6 +25,7 @@ public class LoginController {
     @FXML
     public void initialize(){
         implementation = CourseReviewImplementation.getInstance();
+        screenManager = screenManager.getInstance();
         promptLogIn.setText("Please log in below");
         usernameText.setPromptText("Username:");
         passwordText.setPromptText("Password:");
@@ -32,22 +35,23 @@ public class LoginController {
         backToWelcome.setOnAction(e->{
             //go to welcome page
             //possibly move this somewhere else
+            screenManager.switchScreen("welcome");
         });
     }
     public void attemptLogIn(){
         logIn.setOnAction(e->{
             username = (usernameText.getText()).toString();
             password = (passwordText.getText()).toString();
-            loggedin = implementation.login(username, password);
+            loggedin = implementation.existingUser(username) && implementation.login(username, password);
         });
-        if(!loggedin){
+        if(loggedin){
+            screenManager.switchScreen("main menu");
+        }
+        else{
             failedLogIn();
         }
-//        else if (loggedin){
-//            implementation.
-//        }
     }
-    public void failedLogIn(){
+    private void failedLogIn(){
         incorrectPassword.setText("Incorrect password. Please try again");
     }
 
