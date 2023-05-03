@@ -24,6 +24,10 @@ public class CourseReviewImplementation implements CourseReview{
     public void connect(){
         databaseManager.connect();
     }
+    public void disconnect(){databaseManager.disconnect();}
+
+
+
     public boolean login(String username, String password){
         int id = databaseManager.getStudentID(username);
         String actual = databaseManager.getPassword(username);
@@ -46,7 +50,7 @@ public class CourseReviewImplementation implements CourseReview{
     }
     public void logout(){
         loggedInStudent = null;
-        databaseManager.disconnect();
+//        databaseManager.disconnect();
     }
     public void submitReview(Course c, String review, int rating){
         databaseManager.addReview(loggedInStudent.getStudentName(), c.getCourseDepartment(),c.getCourseCatalogNumber(),review, rating);
@@ -54,4 +58,9 @@ public class CourseReviewImplementation implements CourseReview{
     public List<Review> getReviewsByCourse(Course c){
         return databaseManager.getAllReviews(c.getCourseDepartment(),c.getCourseID());
     }
+
+
+
 }
+
+
