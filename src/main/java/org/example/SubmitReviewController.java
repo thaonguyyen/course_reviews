@@ -29,11 +29,19 @@ public class SubmitReviewController {
                 String text = reviewText.getText();
                 String courseString = courseText.getText();
                 String department = courseString.split(" ")[0];
-                String catalogNumber = courseString.split(" ")[1];
+                String catalogNumberString = courseString.split(" ")[1];
+                int catalogNumber = Integer.parseInt(catalogNumberString);
                 Course c = new Course(department, catalogNumber);
-                implementation.submitReview();
+                String ratingString = ratingText.getText();
+                int rating = Integer.parseInt(ratingString);
+                implementation.submitReview(c, text, rating);
+                screenManager.switchScreen("main menu");
+            }catch(NumberFormatException n){
+                //Display error message about course code or rating being incorrect
+            }catch(ArrayIndexOutOfBoundsException o){
+                //Display error message about incorrect course format
             }
-        })
+        });
     }
 
 
