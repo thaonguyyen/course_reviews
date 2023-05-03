@@ -16,10 +16,26 @@ public class SubmitReviewController {
     @FXML
     private TextArea reviewText;
     private CourseReviewImplementation implementation;
+    private ScreenManager screenManager = ScreenManager.getInstance();
 
     @FXML
     public void initialize(){
+
         prompt.setText("Please fill out the following information:");
+        implementation = CourseReviewImplementation.getInstance();
+        screenManager = ScreenManager.getInstance();
+        submit.setOnAction(e ->{
+            try {
+                String text = reviewText.getText();
+                String courseString = courseText.getText();
+                String department = courseString.split(" ")[0];
+                String catalogNumber = courseString.split(" ")[1];
+                Course c = new Course(department, catalogNumber);
+                implementation.submitReview();
+            }
+        })
     }
+
+
 
 }
