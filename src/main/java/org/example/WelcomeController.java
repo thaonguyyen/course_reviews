@@ -13,11 +13,11 @@ public class WelcomeController {
 
     @FXML
     public void initialize(){
-        implementation = new CourseReviewImplementation();
-        welcome.setText("Welcome!");
-        prompt.setText("Please select an option below to get started");
-        logInToExistingUser.setText("Loging-to an Existing User");
-        createNewUser.setText("Create a New User");
+//        implementation = new CourseReviewImplementation();
+//        welcome.setText("Welcome!");
+//        prompt.setText("Please select an option below to get started");
+//        logInToExistingUser.setText("Loging-to an Existing User");
+//        createNewUser.setText("Create a New User");
         logInToExistingUser.setOnAction(e->{
             //switch to login scene
         });

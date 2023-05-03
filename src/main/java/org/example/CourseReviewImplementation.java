@@ -5,7 +5,22 @@ import java.util.List;
 
 public class CourseReviewImplementation implements CourseReview{
     DatabaseManager databaseManager = new DatabaseManager();
+    private static CourseReviewImplementation singleInstance;
     public Student loggedInStudent;
+
+
+    private CourseReviewImplementation(){
+
+    }
+
+    //Singleton
+    public static CourseReviewImplementation getInstance(){
+        if(singleInstance == null){
+            singleInstance = new CourseReviewImplementation();
+        }
+       return singleInstance;
+    }
+
     public void connect(){
         databaseManager.connect();
     }

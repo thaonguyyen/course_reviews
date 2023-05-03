@@ -21,7 +21,7 @@ public class CourseReviewController {
     @FXML
     public void initialize(){
 
-        implementation = new CourseReviewImplementation();
+        implementation = CourseReviewImplementation.getInstance();
 //        username = new TextField("Username: ");
 //        password = new TextField("Password: ");
 //        createNewUser = new Button("Create New User");

@@ -22,7 +22,7 @@ public class LoginController {
     private String username, password;
     @FXML
     public void initialize(){
-        implementation = new CourseReviewImplementation();
+        implementation = CourseReviewImplementation.getInstance();
         promptLogIn.setText("Please log in below");
         usernameText.setPromptText("Username:");
         passwordText.setPromptText("Password:");

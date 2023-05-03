@@ -12,7 +12,7 @@ public class MainMenuController {
     private Label title, prompt;
     @FXML
     public void initialize(){
-        implementation = new CourseReviewImplementation();
+        implementation = CourseReviewImplementation.getInstance();
         title.setText("Main Menu");
         prompt.setText("Please select an option below");
         submitReview.setText("Submit Review");
