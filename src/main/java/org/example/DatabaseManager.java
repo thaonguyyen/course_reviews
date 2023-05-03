@@ -125,8 +125,10 @@ public class DatabaseManager {
         }
     }
 
-    public void addStudent(String username, String password){
+    public void addStudent(Student s){
         try {
+            String username = s.getStudentName();
+            String password = s.getStudentPassword();
             String addStudent = String.format("INSERT INTO Students (ID, Student" +
                     "Name, Password) values(NULL, \"%s\", \"%s\")", username, password);
             Statement addStudentStatement = connection.createStatement();
@@ -169,6 +171,9 @@ public class DatabaseManager {
             String queryString = String.format("SELECT ID FROM Courses WHERE Department = \'%s\' AND CatalogNumber = %d", department, catNumber);
             Statement courseStatement = connection.createStatement();
             ResultSet rs = courseStatement.executeQuery(queryString);
+            if(rs.isClosed()){
+                return -1;
+            }
             int courseID = rs.getInt("ID");
             return courseID;
         }
@@ -176,6 +181,7 @@ public class DatabaseManager {
             throw new IllegalStateException(e);
         }
     }
+
     public int getStudentID(String name){
         try{
             String queryString = String.format("SELECT * FROM Students WHERE StudentName = \'%s\'", name);
@@ -186,7 +192,6 @@ public class DatabaseManager {
                 return -1;
             }
             int studentID = rs.getInt("ID");
-            System.out.println(studentID);
             return studentID;
         }
         catch(SQLException e){
@@ -212,6 +217,26 @@ public class DatabaseManager {
         int rating = rs.getInt("Rating");
         return new Review(studentID, courseID, review, rating);
     }
+
+    public Review getReviewByStudentAndCourse(Student s, Course c){
+        try {
+            String courseDep = c.getCourseDepartment();
+            int courseCatNum = c.getCourseCatalogNumber();
+            String studentName = s.getStudentName();
+            int studentID = getStudentID(studentName);
+            int courseID = getCourseID(courseDep, courseCatNum);
+            String queryString = "SELECT * FROM Reviews WHERE StudentID = " + studentID + " AND CourseID = " + courseID;
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(queryString);
+            if(rs.isClosed()){
+                return null;
+            }
+            return getReview(rs);
+        }catch(SQLException e){
+            throw new IllegalStateException(e);
+        }
+    }
+
     public List<Review> getAllReviews(String department, int catNumber){
         try{
             List<Review>  returnList = new ArrayList<Review>();
@@ -246,11 +271,17 @@ public class DatabaseManager {
         //db.deleteTables();
         //db.createTables();
         db.clear();
-        db.addStudent("ews9rk", "qwerty");
-        db.addStudent("vdk4dy", "stupid");
+        /*String user1 = "ews9rk";
+        String pass1 = "qwerty";
+        String user2 = "vdk4dy";
+        String pass2 = "password";
+        Student one = new Student(user1, pass1);
+        Student two = new Student(user2, pass2);
+        db.addStudent(one);
+        db.addStudent(two);
         db.addCourse("CS", 6969);
-        db.addCourse("CS", 1234);
-        db.addReview("vdk4dy", "CS", 1234, "This class sucks so much it doesn't even exist", 3);
+        db.addCourse("CS", 1234);*/
+        //db.clear();
         db.disconnect();
     }
 }
