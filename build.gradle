@@ -5,12 +5,15 @@ plugins {
     id 'org.beryx.jlink' version '2.24.1'
 }
 
+
+
 group 'org.example'
 version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
 }
+
 
 sourceCompatibility = '17'
 targetCompatibility = '17'
@@ -20,8 +23,16 @@ tasks.withType(JavaCompile) {
 }
 
 application {
-    mainModule = 'org.example'
+    mainModule = 'hw7.coursereview.vdk4dy.ews9rk.rhq6nu.main'
     mainClass = 'org.example.Main'
+}
+
+jar {
+    manifest {
+        attributes(
+        'Main-Class': 'org.example.Main'
+        )
+    }
 }
 
 javafx {
