@@ -90,7 +90,8 @@ public class CourseReviewImplementation implements CourseReview{
             count++;
         }
         double average = sumOfRating/count;
-        return average;
+        double display =  Math.floor(average * 100) / 100;
+        return display;
     }
 
     public List<String> getAllReviewMessages(Course c){
