@@ -181,7 +181,6 @@ public class DatabaseManager {
             throw new IllegalStateException(e);
         }
     }
-
     public int getStudentID(String name){
         try{
             String queryString = String.format("SELECT * FROM Students WHERE StudentName = \'%s\'", name);
@@ -212,10 +211,64 @@ public class DatabaseManager {
     }
     public Review getReview(ResultSet rs) throws SQLException{
         int studentID = rs.getInt("StudentID");
+        String username = getStudentNameByReviewID(studentID);
+        String password = getStudentPassByReviewID(studentID);
+        Student student = new Student(username, password);
         int courseID = rs.getInt("CourseID");
+        String department = getCourseDepartmentByReviewID(courseID);
+        int number = getCourseNumberByReviewID(courseID);
+        Course course = new Course(department, number);
         String review = rs.getString("Review");
         int rating = rs.getInt("Rating");
-        return new Review(studentID, courseID, review, rating);
+        return new Review(student, course, review, rating);
+    }
+
+    public String getCourseDepartmentByReviewID(int id){
+        try {
+            String queryString = "SELECT * FROM Courses WHERE ID = "+id;
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(queryString);
+            String department = rs.getString("Department");
+            return department;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int getCourseNumberByReviewID(int id){
+        try {
+            String queryString = "SELECT * FROM Courses WHERE ID = "+id;
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(queryString);
+            int number = rs.getInt("CatalogNumber");
+            return number;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getStudentNameByReviewID(int id){
+        try {
+            String queryString = "SELECT * FROM Students WHERE ID = "+id;
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(queryString);
+            String user = rs.getString("StudentName");
+            return user;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getStudentPassByReviewID(int id){
+        try {
+            String queryString = "SELECT * FROM Students WHERE ID = "+id;
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(queryString);
+            String pass = rs.getString("Password");
+            return pass;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Review getReviewByStudentAndCourse(Student s, Course c){

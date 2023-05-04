@@ -10,7 +10,7 @@ public class CourseReviewImplementation implements CourseReview{
     public Student loggedInStudent;
 
 
-    private CourseReviewImplementation(){
+    CourseReviewImplementation(){
 
     }
 
@@ -102,7 +102,30 @@ public class CourseReviewImplementation implements CourseReview{
         return reviews;
     }
 
+    public void addStarterData(){
+        Student user1 = new Student("username1", "pass1");
+        Student user2 = new Student("username2", "pass2");
+        Student user3 = new Student("username3", "pass3");
+        Student user4 = new Student("username4", "pass4");
+        Course course1 = new Course("CS", 3140);
+        Course course2 = new Course("CS", 3100);
+        Course course3 = new Course("CS", 2100);
 
+        databaseManager.addStudent(user1);
+        databaseManager.addStudent(user2);
+        databaseManager.addStudent(user3);
+        databaseManager.addStudent(user4);
+
+        databaseManager.addCourse(course1.getCourseDepartment(), course1.getCourseCatalogNumber());
+        databaseManager.addCourse(course2.getCourseDepartment(), course2.getCourseCatalogNumber());
+        databaseManager.addCourse(course3.getCourseDepartment(), course3.getCourseCatalogNumber());
+
+        databaseManager.addReview(user1.getStudentName(), course1.getCourseDepartment(), course1.getCourseCatalogNumber(), "Good class.", 4);
+        databaseManager.addReview(user2.getStudentName(), course2.getCourseDepartment(), course2.getCourseCatalogNumber(), "Hard class.", 3);
+        databaseManager.addReview(user3.getStudentName(), course3.getCourseDepartment(), course3.getCourseCatalogNumber(), "Easy class.", 5);
+        databaseManager.addReview(user4.getStudentName(), course1.getCourseDepartment(), course1.getCourseCatalogNumber(), "Helpful class.", 3);
+        databaseManager.addReview(user1.getStudentName(), course2.getCourseDepartment(), course2.getCourseCatalogNumber(), "Boring class.", 2);
+    }
 
 }
 

@@ -13,6 +13,7 @@ public class CommandLineUI {
         CommandLineUI ui = new CommandLineUI();
         db.connect();
         ui.initializeScanner();
+        db.addStarterData();
         ui.loginUI();
     }
     private void initializeScanner() {
