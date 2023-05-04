@@ -37,14 +37,15 @@ public class LoginController {
             //possibly move this somewhere else
             screenManager.switchScreen("welcome");
         });
+        logIn.setOnAction(e->{
+            attemptLogIn();
+        });
     }
     public void attemptLogIn(){
-        logIn.setOnAction(e->{
-            username = (usernameText.getText()).toString();
-            password = (passwordText.getText()).toString();
-            loggedin = implementation.existingUser(username) && implementation.login(username, password);
-        });
-        if(loggedin){
+
+        username = (usernameText.getText()).toString();
+        password = (passwordText.getText()).toString();
+        if(implementation.existingUser(username) && implementation.login(username, password)){
             screenManager.switchScreen("main menu");
         }
         else{
