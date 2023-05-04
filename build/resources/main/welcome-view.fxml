@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.WelcomeController">
+   <children>
+      <Label fx:id="welcome" layoutX="237.0" layoutY="45.0" prefHeight="51.0" prefWidth="126.0" text="Welcome! ">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="prompt" layoutX="182.0" layoutY="96.0" prefHeight="23.0" prefWidth="236.0" text="Please select an option below to get started" />
+      <Button fx:id="logInToExistingUser" layoutX="138.0" layoutY="200.0" mnemonicParsing="false" text="Login-to an Existing User" />
+      <Button fx:id="createNewUser" layoutX="322.0" layoutY="200.0" mnemonicParsing="false" text="Create a New User" />
+   </children>
+</AnchorPane>
