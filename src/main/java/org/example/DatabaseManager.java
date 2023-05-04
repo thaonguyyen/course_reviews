@@ -319,11 +319,11 @@ public class DatabaseManager {
     }
 
     public static void main(String[] args) throws SQLException {
-//        DatabaseManager db = new DatabaseManager();
-//        db.connect();
+        DatabaseManager db = new DatabaseManager();
+        db.connect();
 //        db.deleteTables();
 //        db.createTables();
-//        db.clear();
+        db.clear();
 //        String user1 = "ews9rk";
 //        String pass1 = "qwerty";
 //        String user2 = "vdk4dy";
@@ -335,6 +335,6 @@ public class DatabaseManager {
 //        db.addCourse("CS", 6969);
 //        db.addCourse("CS", 1234);
         //db.clear();
-//        db.disconnect();
+        db.disconnect();
     }
 }

@@ -33,15 +33,16 @@ public class SeeReviewsController {
         });
         enterCourseButton.setOnAction(e ->{
             try {
+                errorMessage.setText("");
                 String courseString = enterCourseTextField.getText();
                 String department = courseString.split(" ")[0];
                 String catalogNumberString = courseString.split(" ")[1];
                 int catalogNumber = Integer.parseInt(catalogNumberString);
-                System.out.println(department + " " + catalogNumber);
+                //System.out.println(department + " " + catalogNumber);
                 Course c = new Course(department, catalogNumber);
                 if (implementation.hasReviews(c)) {
                     displayReviews(c);
-                    avgRatingLabel.setText(Double.toString(implementation.getAverageForReview(c)));
+                    avgRatingLabel.setText((Double.toString(implementation.getAverageForReview(c)))+"/5");
                 } else {
                     errorMessage.setText("Course has no reviews!");
                 }

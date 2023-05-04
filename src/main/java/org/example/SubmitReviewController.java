@@ -27,6 +27,7 @@ public class SubmitReviewController {
         screenManager = ScreenManager.getInstance();
         submit.setOnAction(e ->{
             try {
+                errorMessage.setText("");
                 String text = reviewText.getText();
                 String courseString = courseText.getText();
                 String department = courseString.split(" ")[0];
@@ -35,18 +36,21 @@ public class SubmitReviewController {
                 Course c = new Course(department, catalogNumber);
                 String ratingString = ratingText.getText();
                 int rating = Integer.parseInt(ratingString);
-                if(!implementation.checkReviewAlreadyExists(c)) {
+                if(rating < 1 || rating > 5){
+                    errorMessage.setText("Invalid rating, must be between 1 and 5.");
+                }
+                if(!implementation.checkReviewAlreadyExists(c) && rating >= 1 && rating <= 5) {
                     implementation.submitReview(c, text, rating);
                     resetFields();
                     screenManager.switchScreen("main menu");
                 }
                 else{
-                    errorMessage.setText("You cannot submit a review for a course you already reviewed!");
+                    errorMessage.setText("You cannot submit a review for a course you already reviewed or invalid rating!");
                 }
 
             }catch(NumberFormatException n){
                 //Display error message about course code or rating being incorrect
-                errorMessage.setText("Please format your input as [Department Code] [Catalog Number] and make sure your score is an integer.");
+                errorMessage.setText("Please format your input as [Department Code] [Catalog Number] and make sure your rating is an integer.");
             }catch(ArrayIndexOutOfBoundsException o){
                 //Display error message about incorrect course format
                 errorMessage.setText("Please format your input as [Department Code] [Catalog Number]");

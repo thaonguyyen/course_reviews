@@ -18,7 +18,7 @@ public class WelcomeController {
         screenManager = ScreenManager.getInstance();
         welcome.setText("Welcome!");
         prompt.setText("Please select an option below to get started");
-        logInToExistingUser.setText("Loging-to an Existing User");
+        logInToExistingUser.setText("Login-to an Existing User");
         createNewUser.setText("Create a New User");
         logInToExistingUser.setOnAction(e->{
             //switch to login scene
