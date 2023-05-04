@@ -38,8 +38,10 @@ public class SubmitReviewController {
                 screenManager.switchScreen("main menu");
             }catch(NumberFormatException n){
                 //Display error message about course code or rating being incorrect
+                errorMessage.setText("Please format your input as [Department Code] [Catalog Number] and make sure your score is an integer.");
             }catch(ArrayIndexOutOfBoundsException o){
                 //Display error message about incorrect course format
+                errorMessage.setText("Please format your input as [Department Code] [Catalog Number]");
             }
         });
     }
