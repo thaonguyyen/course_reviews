@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.SubmitReviewController">
+   <children>
+      <Label fx:id="prompt" layoutX="32.0" layoutY="20.0" prefHeight="30.0" prefWidth="263.0" text="Please fill out the following information:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="courseText" layoutX="183.0" layoutY="81.0" />
+      <TextArea fx:id="reviewText" layoutX="183.0" layoutY="115.0" prefHeight="154.0" prefWidth="286.0" />
+      <TextField fx:id="ratingText" layoutX="183.0" layoutY="286.0" prefHeight="26.0" prefWidth="49.0" />
+      <Button fx:id="submit" layoutX="418.0" layoutY="345.0" mnemonicParsing="false" text="Submit " />
+      <Label fx:id="coursePrompt" layoutX="124.0" layoutY="85.0" text="Course:" />
+      <Label fx:id="reviewPrompt" layoutX="124.0" layoutY="115.0" text="Review:" />
+      <Label fx:id="ratingPrompt" layoutX="98.0" layoutY="290.0" text="Rating (1-5):" />
+      <Label fx:id="errorMessage" layoutX="183.0" layoutY="60.0" text="*error message " textFill="RED" />
+      <Button fx:id="mainMenu" layoutX="495.0" layoutY="22.0" mnemonicParsing="false" text="Main Menu" />
+   </children>
+</AnchorPane>
