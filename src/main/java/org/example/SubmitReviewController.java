@@ -36,16 +36,16 @@ public class SubmitReviewController {
                 Course c = new Course(department, catalogNumber);
                 String ratingString = ratingText.getText();
                 int rating = Integer.parseInt(ratingString);
-                if(rating < 1 || rating > 5){
-                    errorMessage.setText("Invalid rating, must be between 1 and 5.");
-                }
                 if(!implementation.checkReviewAlreadyExists(c) && rating >= 1 && rating <= 5) {
                     implementation.submitReview(c, text, rating);
                     resetFields();
                     screenManager.switchScreen("main menu");
                 }
+                else if(rating < 1 || rating > 5){
+                    errorMessage.setText("Invalid rating, must be between 1 and 5.");
+                }
                 else{
-                    errorMessage.setText("You cannot submit a review for a course you already reviewed or invalid rating!");
+                    errorMessage.setText("You cannot submit a review for a course you already reviewed!");
                 }
 
             }catch(NumberFormatException n){
