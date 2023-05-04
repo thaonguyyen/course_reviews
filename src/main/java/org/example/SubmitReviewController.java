@@ -22,6 +22,7 @@ public class SubmitReviewController {
     public void initialize(){
 
         prompt.setText("Please fill out the following information:");
+        errorMessage.setText("");
         implementation = CourseReviewImplementation.getInstance();
         screenManager = ScreenManager.getInstance();
         submit.setOnAction(e ->{
@@ -34,9 +35,15 @@ public class SubmitReviewController {
                 Course c = new Course(department, catalogNumber);
                 String ratingString = ratingText.getText();
                 int rating = Integer.parseInt(ratingString);
-                implementation.submitReview(c, text, rating);
-                resetFields();
-                screenManager.switchScreen("main menu");
+                if(!implementation.checkReviewAlreadyExists(c)) {
+                    implementation.submitReview(c, text, rating);
+                    resetFields();
+                    screenManager.switchScreen("main menu");
+                }
+                else{
+                    errorMessage.setText("You cannot submit a review for a course you already reviewed!");
+                }
+
             }catch(NumberFormatException n){
                 //Display error message about course code or rating being incorrect
                 errorMessage.setText("Please format your input as [Department Code] [Catalog Number] and make sure your score is an integer.");

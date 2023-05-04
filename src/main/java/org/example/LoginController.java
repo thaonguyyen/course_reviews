@@ -26,6 +26,7 @@ public class LoginController {
     public void initialize(){
         implementation = CourseReviewImplementation.getInstance();
         screenManager = screenManager.getInstance();
+        incorrectPassword.setText("");
         promptLogIn.setText("Please log in below");
         usernameText.setPromptText("Username:");
         passwordText.setPromptText("Password:");
@@ -35,6 +36,7 @@ public class LoginController {
         backToWelcome.setOnAction(e->{
             //go to welcome page
             //possibly move this somewhere else
+            resetFields();
             screenManager.switchScreen("welcome");
         });
         logIn.setOnAction(e->{
@@ -46,6 +48,7 @@ public class LoginController {
         username = (usernameText.getText()).toString();
         password = (passwordText.getText()).toString();
         if(implementation.existingUser(username) && implementation.login(username, password)){
+            resetFields();
             screenManager.switchScreen("main menu");
         }
         else{
@@ -54,6 +57,11 @@ public class LoginController {
     }
     private void failedLogIn(){
         incorrectPassword.setText("Incorrect password. Please try again");
+    }
+    private void resetFields(){
+        incorrectPassword.setText("");
+        usernameText.setText("");
+        passwordText.setText("");
     }
 
 }
