@@ -35,6 +35,7 @@ public class SubmitReviewController {
                 String ratingString = ratingText.getText();
                 int rating = Integer.parseInt(ratingString);
                 implementation.submitReview(c, text, rating);
+                resetFields();
                 screenManager.switchScreen("main menu");
             }catch(NumberFormatException n){
                 //Display error message about course code or rating being incorrect
@@ -44,6 +45,17 @@ public class SubmitReviewController {
                 errorMessage.setText("Please format your input as [Department Code] [Catalog Number]");
             }
         });
+        mainMenu.setOnAction(e -> {
+            resetFields();
+            screenManager.switchScreen("main menu");
+        });
+    }
+
+    private void resetFields(){
+        reviewText.setText("");
+        ratingText.setText("");
+        courseText.setText("");
+        errorMessage.setText("");
     }
 
 

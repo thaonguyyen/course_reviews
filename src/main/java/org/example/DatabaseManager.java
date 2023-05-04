@@ -319,22 +319,22 @@ public class DatabaseManager {
     }
 
     public static void main(String[] args) throws SQLException {
-        DatabaseManager db = new DatabaseManager();
-        db.connect();
-        //db.deleteTables();
-        //db.createTables();
-        db.clear();
-        /*String user1 = "ews9rk";
-        String pass1 = "qwerty";
-        String user2 = "vdk4dy";
-        String pass2 = "password";
-        Student one = new Student(user1, pass1);
-        Student two = new Student(user2, pass2);
-        db.addStudent(one);
-        db.addStudent(two);
-        db.addCourse("CS", 6969);
-        db.addCourse("CS", 1234);*/
+//        DatabaseManager db = new DatabaseManager();
+//        db.connect();
+//        db.deleteTables();
+//        db.createTables();
+//        db.clear();
+//        String user1 = "ews9rk";
+//        String pass1 = "qwerty";
+//        String user2 = "vdk4dy";
+//        String pass2 = "password";
+//        Student one = new Student(user1, pass1);
+//        Student two = new Student(user2, pass2);
+//        db.addStudent(one);
+//        db.addStudent(two);
+//        db.addCourse("CS", 6969);
+//        db.addCourse("CS", 1234);
         //db.clear();
-        db.disconnect();
+//        db.disconnect();
     }
 }
