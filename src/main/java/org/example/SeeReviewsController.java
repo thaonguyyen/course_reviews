@@ -33,6 +33,7 @@ public class SeeReviewsController {
         });
         enterCourseButton.setOnAction(e ->{
             try {
+                reviews.setText("");
                 errorMessage.setText("");
                 String courseString = enterCourseTextField.getText();
                 String department = courseString.split(" ")[0];
