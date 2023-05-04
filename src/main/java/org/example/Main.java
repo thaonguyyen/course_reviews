@@ -34,6 +34,8 @@ public class Main extends Application {
         screenManager.addScreen("see reviews", seeReviewLoader.load());
         CourseReviewImplementation implementation = CourseReviewImplementation.getInstance();
         implementation.connect();
+        implementation.addStarterData();
+
         stage.setOnCloseRequest(e ->{
             implementation.logout();
             implementation.disconnect();

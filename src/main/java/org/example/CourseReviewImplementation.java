@@ -111,20 +111,31 @@ public class CourseReviewImplementation implements CourseReview{
         Course course2 = new Course("CS", 3100);
         Course course3 = new Course("CS", 2100);
 
-        databaseManager.addStudent(user1);
-        databaseManager.addStudent(user2);
-        databaseManager.addStudent(user3);
-        databaseManager.addStudent(user4);
+        if(!existingUser(user1.getStudentName())){
+            createUser(user1.getStudentName(), user1.getStudentPassword());
+        }
+        if(!existingUser(user2.getStudentName())){
+            createUser(user2.getStudentName(), user2.getStudentPassword());
+        }
+        if(!existingUser(user3.getStudentName())){
+            createUser(user3.getStudentName(), user3.getStudentPassword());
+        }
+        if(!existingUser(user4.getStudentName())){
+            createUser(user4.getStudentName(), user4.getStudentPassword());
+        }
 
-        databaseManager.addCourse(course1.getCourseDepartment(), course1.getCourseCatalogNumber());
-        databaseManager.addCourse(course2.getCourseDepartment(), course2.getCourseCatalogNumber());
-        databaseManager.addCourse(course3.getCourseDepartment(), course3.getCourseCatalogNumber());
 
-        databaseManager.addReview(user1.getStudentName(), course1.getCourseDepartment(), course1.getCourseCatalogNumber(), "Good class.", 4);
-        databaseManager.addReview(user2.getStudentName(), course2.getCourseDepartment(), course2.getCourseCatalogNumber(), "Hard class.", 3);
-        databaseManager.addReview(user3.getStudentName(), course3.getCourseDepartment(), course3.getCourseCatalogNumber(), "Easy class.", 5);
-        databaseManager.addReview(user4.getStudentName(), course1.getCourseDepartment(), course1.getCourseCatalogNumber(), "Helpful class.", 3);
-        databaseManager.addReview(user1.getStudentName(), course2.getCourseDepartment(), course2.getCourseCatalogNumber(), "Boring class.", 2);
+
+        loggedInStudent = user1;
+        submitReview(course1, "Good class", 4);
+        submitReview(course2, "Boring class", 2);
+        loggedInStudent = user2;
+        submitReview(course2, "Hard class", 3);
+        loggedInStudent = user3;
+        submitReview(course3, "Easy class", 5);
+        loggedInStudent = user4;
+        submitReview(course1, "Helpful class", 3);
+        logout();
     }
 
 }

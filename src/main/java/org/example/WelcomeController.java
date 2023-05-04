@@ -16,8 +16,6 @@ public class WelcomeController {
     public void initialize(){
         implementation = CourseReviewImplementation.getInstance();
         screenManager = ScreenManager.getInstance();
-        implementation.connect();
-        implementation.addStarterData();
         welcome.setText("Welcome!");
         prompt.setText("Please select an option below to get started");
         logInToExistingUser.setText("Login-to an Existing User");

@@ -35,6 +35,7 @@ public class CreateNewUserController {
             if(!implementation.existingUser(username) && confirmedPassword.equals(password)) {
                 implementation.createUser(username, password);
                 implementation.login(username, password);
+                resetFields();
                 screenManager.switchScreen("main menu");
             } else if (implementation.existingUser(username)){
                 errorMessage.setText("User already exists");
